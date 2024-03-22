@@ -28,6 +28,32 @@
   color: #61dafb;
 }
 
+.app-container {
+  background: rgb(238, 49, 132);
+  background: linear-gradient(190deg, rgb(88, 112, 227) 0%, rgba(0, 44, 96, 1) 100%);
+  min-height: 100vh;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+button {
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: #32a5df;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
