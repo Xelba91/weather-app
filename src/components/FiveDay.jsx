@@ -4,6 +4,7 @@ import { ApiKey } from "../helper/api";
 
 const FiveDay = () => {
   const [city, setCity] = useState("");
+  const [searchInput, setSearchInput] = useState(""); // Nuovo stato per memorizzare il valore corrente della barra di ricerca
   const [weatherData, setWeatherData] = useState(null);
 
   const formatDateTime = (dateTimeString) => {
@@ -36,7 +37,7 @@ const FiveDay = () => {
   };
 
   const getWeather = () => {
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${ApiKey}&lang=it&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&appid=${ApiKey}&lang=it&units=metric`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Errore nel recupero dei dati meteorologici");
@@ -63,6 +64,7 @@ const FiveDay = () => {
         };
         const groupedWeatherData = groupByDay(extractedData.list);
         setWeatherData(groupedWeatherData);
+        setCity(searchInput); // Aggiorna il nome della città solo dopo aver ottenuto i dati meteorologici
       })
       .catch((error) => {
         console.error("Errore nel recupero dei dati meteorologici:", error.message);
@@ -77,7 +79,17 @@ const FiveDay = () => {
           <p className="display-6 fs-3">Controlla il Meteo per i prossimi 5 giorni</p>
           <Form.Group controlId="formCity">
             <Form.Label className="display-6 my-5">Inserisci la città</Form.Label>
-            <Form.Control type="text" placeholder="Città" value={city} onChange={(e) => setCity(e.target.value)} />
+            <Form.Control
+              type="text"
+              placeholder="Città"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  getWeather();
+                }
+              }}
+            />
           </Form.Group>
           <Button className="border-white text-white shadow-lg mt-5 mb-2" variant="transparent" onClick={getWeather}>
             Ottieni informazioni Meteo
