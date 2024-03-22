@@ -73,7 +73,7 @@ const FiveDay = () => {
 
   return (
     <Container className="container text-white">
-      <Row>
+      <Row style={{ minHeight: "55vh" }}>
         <Col xs={3} md={2}></Col>
         <Col xs={6} md={8}>
           <p className="display-6 fs-3">Controlla il Meteo per i prossimi 5 giorni</p>
